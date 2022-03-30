@@ -21,4 +21,7 @@ sed -i '7 s@    yolo_height: 416@#    yolo_height: 416@' quantized/deployx.proto
 sed -i '8 s@    yolo_width: 416@#    yolo_width: 416@' quantized/deployx.prototxt
 sed -i '9 s@  }@#  }@' quantized/deployx.prototxt
 
+# and now change alpha (aka "negative_slope") paramter from 0.1 to 0.1015625
+sed -i 's/negative_slope: 0.1/negative_slope: 0.1015625/' quantized/deployx.prototxt
+
 vai_c_caffe --prototxt quantized/deployx.prototxt --caffemodel quantized/deploy.caffemodel --arch ${ARCH} --output_dir compiled/ --net_name yolov3_ct --options "{'mode':'normal','save_kernel':''}";
